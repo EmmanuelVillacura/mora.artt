@@ -1,0 +1,44 @@
+﻿@model Inscripcion
+
+@{
+    ViewData["Title"] = "Editar Inscripción";
+}
+
+<h1 class="d-flex justify-content-center">Editar Inscripción</h1>
+
+<div class="d-flex justify-content-center">
+    <div class="col-md-4">
+        <dl class="row">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="InscripcionID" />
+            <div class="form-group">
+                <label asp-for="AlumnoID" class="control-label"></label>
+                <select asp-for="AlumnoID" class="form-control" asp-items="ViewBag.AlumnoID"></select>
+                <span asp-validation-for="AlumnoID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CursoID" class="control-label"></label>
+                <select asp-for="CursoID" class="form-control" asp-items="ViewBag.CursoID"></select>
+                <span asp-validation-for="CursoID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaInscripcion" class="control-label"></label>
+                <input asp-for="FechaInscripcion" class="form-control" />
+                <span asp-validation-for="FechaInscripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    <input type="submit" value="Actualizar Inscripción" class="btn btn-primary" />
+                    <a class="btn btn-success  m-2" asp-action="Index">Volver</a>
+            </div>
+        </form>
+        </dl>>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

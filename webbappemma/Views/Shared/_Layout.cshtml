@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Academia VD</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/webbappemma.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="" asp-action=""></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+
+                        <li class="nav-item btn btn-secondary">
+                            <a class="nav-link text-dark"
+                               asp-controller="Alumno"
+                               asp-action="index">Alumnos</a>
+                        </li>
+                        <li class="nav-item">&nbsp;</li>
+
+                        <li class="nav-item btn btn-secondary">
+                            <a class="nav-link text-dark"
+                               asp-controller="Inscripcion"
+                               asp-action="index">Inscripcion</a>
+                        </li>
+
+                        <li class="nav-item">&nbsp;</li>
+
+                        <li class="nav-item btn btn-secondary">
+                            <a class="nav-link text-dark "
+                               asp-controller="Curso"
+                               asp-action="index">Curso</a>
+                        </li>
+                        <li class="nav-item">&nbsp;</li>
+
+                        <li class="nav-item btn btn-secondary">
+                            <a class="nav-link text-dark "
+                               asp-controller="regis"
+                               asp-action="Registro">Registro de usuarios</a>
+
+
+
+                    </ul>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="navbar-nav d-flex me-5">
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-user me-2"></i> @User.Identity.Name
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-controller="Auth" asp-action="LogOut" class="dropdown-item">Cerrar Sesion</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container d-flex justify-content-center">
+            &copy; A C A D E M I A V D - V D  <a asp-area="" asp-controller="" asp-action=""></a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

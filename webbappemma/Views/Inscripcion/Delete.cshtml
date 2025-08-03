@@ -1,0 +1,36 @@
+﻿@model Inscripcion
+
+@{
+    ViewData["Title"] = "Eliminar Inscripción";
+}
+
+<h1 class="d-flex justify-content-center">Eliminar Inscripción</h1>
+
+<div class="d-flex justify-content-center">
+    <hr />
+    <div class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaInscripcion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaInscripcion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Alumno)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Alumno.Apellido)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Curso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Curso.Horario)
+        </dd>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="InscripcionID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+</div>

@@ -1,0 +1,41 @@
+﻿@model Curso
+
+@{
+    ViewData["Title"] = "Eliminar Curso";
+}
+
+
+<div>
+    <h1 class="d-flex justify-content-center" >Eliminar Curso</h1>
+
+    <div class="d-flex justify-content-center">
+        <hr />
+        <div class="col-sm-2">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NombreCurso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NombreCurso)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Horario)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Horario)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CursoID" />
+                <input type="submit" value="Eliminar" class="btn btn-danger" />
+                <a class="btn btn-primary" asp-action="Index">Volver</a>
+    </form>
+</div>
+    </div>
+</div>
