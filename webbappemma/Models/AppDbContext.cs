@@ -6,6 +6,8 @@ public class AppDbContext : DbContext
 
 {
     public DbSet<Usuario> TblUsuario { get; set; }
+
+    public DbSet<Producto> Producto { get; set; }
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {

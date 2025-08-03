@@ -1,8 +1,47 @@
-﻿@{
+﻿@model List<webbappemma.Models.Producto>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Productos</h2>
+    @if (Model != null && Model.Any())
+    {
+        int count = 0;
+        for (int i = 0; i < 3; i++) // 3 filas
+        {
+            <div class="row justify-content-center">
+                @for (int j = 0; j < 4; j++) // 4 columnas
+                {
+                    if (count < Model.Count && count < 12)
+                    {
+                        var producto = Model[count];
+                        <div class="col-md-3 mb-4">
+                            <div class="card h-100 position-relative">
+                                <!-- Botón X para eliminar -->
+                                <form asp-action="EliminarProducto" method="post" style="position: absolute; top: 8px; right: 12px; z-index: 2;">
+                                    <input type="hidden" name="id" value="@producto.Id" />
+                                    <button type="submit" class="btn btn-link p-0" title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar este producto?');">
+                                        <span style="font-size: 1.5rem; color: #dc3545;">&times;</span>
+                                    </button>
+                                </form>
+                                <img src="@producto.ImagenUrl" class="card-img-top" alt="@producto.Nombre" style="height: 180px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">@producto.Nombre</h5>
+                                    <p class="card-text">@producto.Descripcion</p>
+                                    <p class="card-text"><strong>Precio:</strong> $@producto.Precio</p>
+                                </div>
+                            </div>
+                        </div>
+                        count++;
+                    }
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info text-center">No hay productos disponibles.</div>
+    }
 </div>

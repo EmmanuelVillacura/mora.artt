@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Academia VD</title>
+    <title>@ViewData["Title"] mora.artt   </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/webbappemma.styles.css" asp-append-version="true" />
@@ -22,26 +22,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
-                        <li class="nav-item btn btn-secondary">
-                            <a class="nav-link text-dark"
-                               asp-controller="Alumno"
-                               asp-action="index">Alumnos</a>
-                        </li>
-                        <li class="nav-item">&nbsp;</li>
-
-                        <li class="nav-item btn btn-secondary">
-                            <a class="nav-link text-dark"
-                               asp-controller="Inscripcion"
-                               asp-action="index">Inscripcion</a>
-                        </li>
-
-                        <li class="nav-item">&nbsp;</li>
-
-                        <li class="nav-item btn btn-secondary">
-                            <a class="nav-link text-dark "
-                               asp-controller="Curso"
-                               asp-action="index">Curso</a>
-                        </li>
+                    
                         <li class="nav-item">&nbsp;</li>
 
                         <li class="nav-item btn btn-secondary">
@@ -49,7 +30,9 @@
                                asp-controller="regis"
                                asp-action="Registro">Registro de usuarios</a>
 
-
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="CrearProducto">Agregar Producto</a>
+                        </li>
 
                     </ul>
 
@@ -80,7 +63,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container d-flex justify-content-center">
-            &copy; A C A D E M I A V D - V D  <a asp-area="" asp-controller="" asp-action=""></a>
+            &copy; mora.artt     <a asp-area="" asp-controller="" asp-action=""></a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
