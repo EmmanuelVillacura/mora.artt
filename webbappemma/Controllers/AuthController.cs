@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using webbappemma.Models;
+
 namespace WebApplicationMVC.Controllers
 {
     public class AuthController : Controller
@@ -16,8 +17,6 @@ namespace WebApplicationMVC.Controllers
             _context = context;
         }
 
-
-
         [HttpGet]
         public IActionResult LoginIn()
         {
@@ -25,7 +24,7 @@ namespace WebApplicationMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>LoginIn(LoginViewModel Lvm)
+        public async Task<IActionResult> LoginIn(LoginViewModel Lvm)
         {
             var usuarios = _context.TblUsuario.ToList();
             if (usuarios.Count == 0)
@@ -42,18 +41,13 @@ namespace WebApplicationMVC.Controllers
                 U.PasswordSalt = passwordSalt;
                 _context.TblUsuario.Add(U);
                 _context.SaveChanges();
-
             }
 
-
-            //admin
             var us = _context.TblUsuario.Where(u => u.Username.Equals(Lvm.Username)).FirstOrDefault();
             if (us != null)
             {
-                //Usuario esta en bd
                 if (VerificarPass(Lvm.Password, us.PasswordHash, us.PasswordSalt))
                 {
-                    //Usuario y Contraseña cestan exitosamente en bd
                     var Claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, us.Name),
@@ -61,37 +55,72 @@ namespace WebApplicationMVC.Controllers
                         new Claim(ClaimTypes.Role, us.Rol)
                     };
 
-                    // Licencia del usuario
-                    var identity = new ClaimsIdentity(Claims,
-                        CookieAuthenticationDefaults.AuthenticationScheme);
-
+                    var identity = new ClaimsIdentity(Claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
                         new AuthenticationProperties { IsPersistent = true }
-                        );
+                    );
 
-
-                        return RedirectToAction("Index", "Alumno");
+                    return RedirectToAction("Index", "Alumno");
                 }
                 else
                 {
-                    //Usuario correcto pero contraseña incorrecta
                     ModelState.AddModelError("", "Contraseña Incorrecta");
                     return View(Lvm);
                 }
-
-
             }
             else
             {
-                //Usuario No Existe en bd
                 ModelState.AddModelError("", "Usuario no Encontrado!");
                 return View(Lvm);
             }
-
-
         }
+
+        [HttpGet]
+        public IActionResult Registro()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Registro(RegistroViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Password != model.ConfirmPassword)
+                {
+                    ModelState.AddModelError("ConfirmPassword", "Las contraseñas no coinciden.");
+                    return View(model);
+                }
+
+                if (_context.TblUsuario.Any(u => u.Username == model.Username))
+                {
+                    ModelState.AddModelError("Username", "El nombre de usuario ya existe.");
+                    return View(model);
+                }
+
+                CreatePasswordHash(model.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+                Usuario nuevoUsuario = new Usuario
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    Username = model.Username,
+                    Rol = model.Rol,
+                    PasswordHash = passwordHash,
+                    PasswordSalt = passwordSalt
+                };
+
+                _context.TblUsuario.Add(nuevoUsuario);
+                _context.SaveChanges();
+
+                return RedirectToAction("LoginIn");
+            }
+
+            return View(model);
+        }
+
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -105,7 +134,6 @@ namespace WebApplicationMVC.Controllers
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            //pw administrador 123456
             using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
@@ -121,7 +149,5 @@ namespace WebApplicationMVC.Controllers
                 return pass.SequenceEqual(passwordHash);
             }
         }
-
-
     }
 }

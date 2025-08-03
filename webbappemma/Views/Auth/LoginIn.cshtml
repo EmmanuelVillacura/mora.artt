@@ -1,74 +1,113 @@
-﻿@model LoginViewModel
+﻿@model webbappemma.Models.LoginViewModel
 @{
-    Layout = null;
+    ViewData["Title"] = "Login";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Academia VD</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SistemaWeb.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css?family=Raleway:500,800" rel="stylesheet">
-</head>
-<body style="font-family: 'Raleway';">
-    <div class="container">
-        <main role="main" class="pb-3">
-            <form asp-action="LoginIn" method="post">
 
-                <div class="row justify-content-center">
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
 
-                    <div class="col-md-4 shadow text-center p-3 mt-3">
+    .background-slider-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+    }
 
-                        <img class="img-fluid m-3" width="200" src="https://cdn3d.iconscout.com/3d/premium/thumb/login-3025715-2526913.png?f=webp" />
+    .background-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        transition: transform 1s cubic-bezier(.77,0,.18,1);
+        will-change: transform;
+    }
 
-                        <div class="form-group m-3">   
-                            <input asp-for="Username"  class="form-control text-center" placeholder="Nombre de usuario" />
-                            <span  class="text-danger"></span>
-                        </div>
+        .background-slide.top {
+            z-index: 2;
+        }
 
-                        <div class="form-group m-3 ">
-                            <input asp-for="Password" type="password"  class="form-control text-center" placeholder="Contraseña" />
-                            <span  class="text-danger"></span>
-                        </div>
+        .background-slide.bottom {
+            z-index: 1;
+        }
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    .login-card-transparent {
+        background: rgba(255,255,255,0.25) !important;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.18);
+    }
+</style>
 
-                        <div class="justify-content-center" id="loading" style="display:none;">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
+<div class="background-slider-container">
+    <div class="background-slide bottom" id="bg-bottom"></div>
+    <div class="background-slide top" id="bg-top"></div>
+</div>
 
-                        <div class="form-group m-3">
-                            <input type="submit" value="Iniciar Sesion" class="btn btn-primary col-12" id="btnLoginIn">
-                        </div>
-
-                    </div>
-
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-5 shadow login-card-transparent" style="min-width: 420px; max-width: 500px; width: 100%;">
+        <h2 class="mb-5 text-center" style="font-size:2.2rem;">Iniciar Sesión</h2>
+        <form asp-action="LoginIn" method="post" autocomplete="off">
+            <div class="mb-4">
+                <input asp-for="Username" class="form-control form-control-lg" placeholder="Usuario" autocomplete="off" required />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <input asp-for="Password" class="form-control form-control-lg" type="password" placeholder="********" autocomplete="off" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="d-grid mb-3" id="loginBtnContainer">
+                <button type="submit" class="btn btn-primary btn-lg rounded-pill" id="loginBtn">Ingresar</button>
+            </div>
+            <div class="mb-3" id="progressContainer" style="display:none;">
+                <div class="progress">
+                    <div id="loginProgress" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 0%"></div>
                 </div>
-           </form>
-        </main>
+            </div>
+            <div class="text-danger text-center" id="loginError" style="display:none;"></div>
+        </form>
     </div>
+</div>
 
-    <footer class="border-top footer text-muted text-center">
-        <div class="container">
-            &copy; A C A D E M I A - V D
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+@section Scripts {
     <script>
-        const btnLoginIn = document.getElementById("btnLoginIn");
-        btnLoginIn.addEventListener("click", () =>{
-            const divLoading = document.getElementById("loading");
-            divLoading.style.display = "flex";
-        })
-        </script>
-
-</body>
-</html>
+        const images = [
+            '/images/001.jpeg',
+            '/images/002.jpeg',
+            '/images/003.jpeg'
+        ];
+        let current = 0;
+        let next = 1;
+        const bgBottom = document.getElementById('bg-bottom');
+        const bgTop = document.getElementById('bg-top');
+        bgBottom.style.backgroundImage = `url('${images[current]}')`;
+        bgTop.style.backgroundImage = `url('${images[next]}')`;
+        bgTop.style.transform = 'translateX(-100%)';
+        function slideBackground() {
+            bgTop.style.backgroundImage = `url('${images[next]}')`;
+            bgTop.style.transform = 'translateX(-100%)';
+            void bgTop.offsetWidth;
+            bgTop.style.transition = 'transform 1s cubic-bezier(.77,0,.18,1)';
+            bgTop.style.transform = 'translateX(0%)';
+            setTimeout(() => {
+                bgBottom.style.backgroundImage = `url('${images[next]}')`;
+                bgTop.style.transition = 'none';
+                bgTop.style.transform = 'translateX(-100%)';
+                current = next;
+                next = (next + 1) % images.length;
+            }, 1000);
+        }
+        setInterval(slideBackground, 5000);
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

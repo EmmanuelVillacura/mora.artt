@@ -40,7 +40,10 @@
 
     <div class="form-group">
         <label asp-for="Rol"></label>
-        <input asp-for="Rol" class="form-control" />
+        <select asp-for="Rol" class="form-control">
+            <option value="Administrador">Administrador</option>
+            <option value="Usuario">Usuario</option>
+        </select>
         <span asp-validation-for="Rol" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Registrar</button>

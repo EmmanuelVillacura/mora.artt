@@ -11,7 +11,6 @@ namespace webbappemma.Models
         public string Descripcion { get; set; }
         [Required]
         public string ImagenUrl { get; set; }
-        [Range(0, double.MaxValue)]
-        public decimal Precio { get; set; }
+
     }
 }
