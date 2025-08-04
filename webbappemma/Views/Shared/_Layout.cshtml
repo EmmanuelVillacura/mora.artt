@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    var hideNavbar = controller == "Auth" && action == "LoginIn";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,54 +17,57 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="" asp-action=""></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+        @if (!hideNavbar)
+        {
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="" asp-action=""></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
 
-                        <li class="nav-item">&nbsp;</li>
+                            <li class="nav-item">&nbsp;</li>
 
-                        <li class="nav-item btn btn-secondary">
-                            <a class="nav-link text-dark "
-                               asp-controller="regis"
-                               asp-action="Registro">Registro de usuarios</a>
-                        </li>
+                            <li class="nav-item btn btn-secondary">
+                                <a class="nav-link text-dark "
+                                   asp-controller="regis"
+                                   asp-action="Registro">Registro de usuarios</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="CrearProducto">Agregar Producto</a>
-                        </li>
-
-                        @if (!User.Identity.IsAuthenticated)
-                        {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Auth" asp-action="LoginIn">Iniciar Sesión</a>
-                            </li>
-                        }
-                    </ul>
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <ul class="navbar-nav d-flex me-5">
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-user me-2"></i> @User.Identity.Name
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a asp-controller="Auth" asp-action="LogOut" class="dropdown-item">Cerrar Sesion</a></li>
-                                </ul>
+                                <a class="nav-link btn btn-primary custom-navbar-btn me-2" asp-controller="Home" asp-action="CrearProducto">Agregar Producto</a>
                             </li>
 
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-success custom-navbar-btn" asp-controller="Auth" asp-action="LoginIn">Iniciar Sesión</a>
+                                </li>
+                            }
                         </ul>
-                    }
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <ul class="navbar-nav d-flex me-5">
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-user me-2"></i> @User.Identity.Name
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a asp-controller="Auth" asp-action="LogOut" class="dropdown-item">Cerrar Sesion</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        }
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        }
     </header>
     <div class="container">
         <main role="main" class="pb-3">

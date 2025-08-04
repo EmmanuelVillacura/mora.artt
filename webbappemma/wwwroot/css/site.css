@@ -15,14 +15,14 @@ html {
 
 body {
     margin-bottom: 60px;
-    background: rgb(255,99,2);
-    background: linear-gradient(90deg, rgba(255,99,2,1) 0%, rgba(223,135,18,1) 35%, rgba(255,183,0,1) 100%);
+    background: #ccd1ed;
+    background: radial-gradient(circle, rgba(204, 209, 237, 1) 0%, rgba(228, 218, 232, 1) 50%, rgba(235, 150, 167, 1) 100%);
 }
 
 
 .navbar {
-    background: rgb(46,41,38);
-    background: linear-gradient(90deg, rgba(46,41,38,1) 0%, rgba(50,40,26,1) 46%, rgba(46,45,43,1) 100%);
+    background: #ccd1ed;
+    background: radial-gradient(circle, rgba(204, 209, 237, 1) 0%, rgba(228, 218, 232, 1) 50%, rgba(235, 150, 167, 1) 100%);
 }
 
 .access-h1 {
@@ -42,3 +42,17 @@ body {
     font-size: 30px;
     text-transform: uppercase;
 }
+
+.custom-navbar-btn {
+    color: #fff !important;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 8px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+    .custom-navbar-btn:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        opacity: 0.9;
+    }
